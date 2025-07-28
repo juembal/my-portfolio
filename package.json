@@ -1,0 +1,16 @@
+{
+  "name": "jose-emmanuel-balingit-portfolio",
+  "version": "1.0.0",
+  "description": "Personal portfolio website showcasing projects and skills",
+  "main": "index.html",
+  "scripts": {
+    "start": "serve -s .",
+    "build": "echo 'No build process needed for static site'"
+  },
+  "keywords": ["portfolio", "react", "web-development"],
+  "author": "Jose Emmanuel T. Balingit",
+  "license": "MIT",
+  "devDependencies": {
+    "serve": "^14.0.0"
+  }
+}
