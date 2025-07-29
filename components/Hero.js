@@ -116,7 +116,8 @@ function Hero() {
                                 <div className="mk-hover-image mk-hero-profile-parent">
                                     <div className="mk-hover-image-border"></div>
                                     <div className="mk-hover-image-filter"></div>
-                                    <img alt="Jose Emmanuel T. Balingit" className="mk-hover-profile mk-hero-profile" src="/assets/profile-dark.jpg" id="hero-profile-image" />
+                                    {/* FIXED PATH - removed leading slash */}
+                                    <img alt="Jose Emmanuel T. Balingit" className="mk-hover-profile mk-hero-profile" src="assets/profile-dark.jpg" id="hero-profile-image" />
                                 </div>
                             </div>
                         </div>

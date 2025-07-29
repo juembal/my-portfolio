@@ -19,11 +19,11 @@ function Header() {
             
             setTimeout(() => {
                 if (!isDarkMode) {
-                    // Switching to light mode
-                    heroImage.src = '/assets/profile-light.jpg';
+                    // Switching to light mode - FIXED PATH
+                    heroImage.src = 'assets/profile-light.jpg';
                 } else {
-                    // Switching to dark mode
-                    heroImage.src = '/assets/profile-dark.jpg';
+                    // Switching to dark mode - FIXED PATH
+                    heroImage.src = 'assets/profile-dark.jpg';
                 }
                 
                 // Fade in
@@ -46,7 +46,7 @@ function Header() {
     };
 
     const handleCVAction = (action) => {
-        const cvPath = '/assets/Jose_Emmanuel_Balingit_CV.pdf'; // Update with your actual CV file path
+        const cvPath = 'assets/Jose_Emmanuel_Balingit_CV.pdf'; // FIXED PATH
         
         if (action === 'view') {
             // Open CV in new tab for viewing
