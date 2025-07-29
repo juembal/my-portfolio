@@ -2,14 +2,14 @@ function Projects() {
     const projects = [
         {
             title: "Batangas State University Interactive Navigation Map",
-            description: "A desktop 3D navigation application for Batangas State University – Alangilan campus. As QA member, I conducted comprehensive testing including functional, usability, and compatibility testing to ensure optimal performance. I documented test cases, collaborated with developers to resolve defects, and validated navigation accuracy within the 3D environment. Additionally, I contributed to the project by modeling several 3D buildings for the campus map, combining both technical testing expertise and 3D design skills.",
+            description: "Developed a desktop 3D navigation application for Batangas State University – Alangilan. Served as a QA team member, conducting comprehensive testing including functional, usability, and compatibility testing to ensure optimal system performance. Documented test cases, collaborated with developers to resolve defects, and validated navigation accuracy within the 3D environment. Also contributed to the project by modeling several 3D buildings for the campus map, combining technical testing expertise with 3D design skills.",
             technologies: ["Quality Assurance", "3D Modeling", "Desktop Application Testing", "Bug Testing", "3D Navigation"],
             image: "/assets/navmap.jpg",
             alignment: "right"
         },
         {
             title: "Rakso CT - Billing Tracker Cloud Deployment",
-            description: "During my internship at Rakso CTY, I served as Associate DevOps/Cloud Engineer for a PERN stack billing tracker application. I supported deployment and cloud infrastructure setup using Microsoft Azure services, configured Ubuntu-based virtual machines, and managed deployment pipelines. My responsibilities included Linux server configurations, environment setup, and ensuring smooth operation of backend and frontend services on the cloud platform.",
+            description: "Served as an Associate DevOps/Cloud Engineer during an internship at Rakso CT, contributing to the development and deployment of a PERN stack billing tracker application. Supported the deployment process and cloud infrastructure setup using Microsoft Azure services. Configured Ubuntu-based virtual machines, managed deployment pipelines, and handled Linux server configurations. Responsibilities included setting up development and production environments and ensuring the smooth operation of both backend and frontend services on the cloud platform.",
             technologies: ["Microsoft Azure", "Ubuntu Server", "PERN Stack", "DevOps", "Linux Administration"],
             image: "/assets/rakso.jpg",
             alignment: "left"
@@ -31,12 +31,12 @@ function Projects() {
                             <div key={index} className="mk-projects-single">
                                 <div className="row">
                                     {project.alignment === "right" && (
-                                        <div className="col-6 d-none d-lg-block">
+                                        <div className="col-12 col-lg-6 d-block">
                                             <div className="mk-window-screen mk-projects-image-container mk-projects-image-container-right">
                                                 <div>
                                                     <div className="mk-hover-image">
                                                         <div className="mk-hover-image-filter"></div>
-                                                        <img alt={project.image} className="mk-hover-profile mk-image" src={project.image} />
+                                                        <img alt={project.title} className="mk-hover-profile mk-image" src={project.image} />
                                                     </div>
                                                 </div>
                                             </div>
@@ -60,12 +60,12 @@ function Projects() {
                                         </div>
                                     </div>
                                     {project.alignment === "left" && (
-                                        <div className="col-6 d-none d-lg-block">
+                                        <div className="col-12 col-lg-6 d-block">
                                             <div className="mk-window-screen mk-projects-image-container mk-projects-image-container-left">
                                                 <div>
                                                     <div className="mk-hover-image">
                                                         <div className="mk-hover-image-filter"></div>
-                                                        <img alt={project.image} className="mk-hover-profile mk-image" src={project.image} />
+                                                        <img alt={project.title} className="mk-hover-profile mk-image" src={project.image} />
                                                     </div>
                                                 </div>
                                             </div>

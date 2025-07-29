@@ -41,43 +41,59 @@ function About() {
                                     <div className="skills-equal-grid">
                                         <div className="skill-equal-item">
                                             <i className="fas fa-code"></i>
-                                            <span>Programming</span>
-                                            <small>Java, JavaScript, Python, C++, C</small>
+                                            <div>
+                                                <span>Programming</span>
+                                                <small>Java, JavaScript, Python, C++, C</small>
+                                            </div>
                                         </div>
                                         <div className="skill-equal-item">
                                             <i className="fas fa-bug"></i>
-                                            <span>Testing & QA</span>
-                                            <small>Test Design, Automation, Unity 3D</small>
+                                            <div>
+                                                <span>Testing & QA</span>
+                                                <small>Test Design, Automation, Unity 3D</small>
+                                            </div>
                                         </div>
                                         <div className="skill-equal-item">
                                             <i className="fas fa-globe"></i>
-                                            <span>Web Development</span>
-                                            <small>PERN Stack, HTML, CSS, React</small>
+                                            <div>
+                                                <span>Web Development</span>
+                                                <small>PERN Stack, HTML, CSS, React</small>
+                                            </div>
                                         </div>
                                         <div className="skill-equal-item">
                                             <i className="fab fa-microsoft"></i>
-                                            <span>Cloud & DevOps</span>
-                                            <small>Azure, CI/CD, Ubuntu Server</small>
+                                            <div>
+                                                <span>Cloud & DevOps</span>
+                                                <small>Azure, CI/CD, Ubuntu Server</small>
+                                            </div>
                                         </div>
                                         <div className="skill-equal-item">
                                             <i className="fas fa-database"></i>
-                                            <span>Database</span>
-                                            <small>MySQL, PostgreSQL</small>
+                                            <div>
+                                                <span>Database</span>
+                                                <small>MySQL, PostgreSQL</small>
+                                            </div>
                                         </div>
                                         <div className="skill-equal-item">
                                             <i className="fas fa-shield-alt"></i>
-                                            <span>Security</span>
-                                            <small>OSINT, Vulnerability Scanning</small>
+                                            <div>
+                                                <span>Security</span>
+                                                <small>OSINT, Vulnerability Scanning</small>
+                                            </div>
                                         </div>
                                         <div className="skill-equal-item">
                                             <i className="fab fa-git-alt"></i>
-                                            <span>Version Control</span>
-                                            <small>Git, Collaboration, Branching</small>
+                                            <div>
+                                                <span>Version Control</span>
+                                                <small>Git, Collaboration, Branching</small>
+                                            </div>
                                         </div>
                                         <div className="skill-equal-item">
                                             <i className="fas fa-users"></i>
-                                            <span>Team Work</span>
-                                            <small>Agile, Cross-functional Teams</small>
+                                            <div>
+                                                <span>Team Work</span>
+                                                <small>Agile, Cross-functional Teams</small>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

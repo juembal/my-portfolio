@@ -36,3 +36,8 @@ Thumbs.db
 # Temporary files
 *.tmp
 *.temp
+
+# JDK/JRE installations (not needed for web deployment)
+Oracle_JDK-*/
+jdk*/
+jre*/

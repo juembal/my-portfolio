@@ -12,7 +12,23 @@ function Footer() {
                     <a href="http://linkedin.com/in/joembalingit" target="_blank" rel="noopener noreferrer">
                         <i className="fab fa-linkedin"></i>
                     </a>
-                    <a href="mailto:joembalingit15@gmail.com">
+                    <a href="#" onClick={(e) => {
+                        e.preventDefault();
+                        // Try mailto first, fallback to copying email
+                        const email = 'joembalingit15@gmail.com';
+                        if (navigator.userAgent.includes('Mobile')) {
+                            // On mobile, mailto usually works better
+                            window.location.href = `mailto:${email}`;
+                        } else {
+                            // On desktop, copy to clipboard and show notification
+                            navigator.clipboard.writeText(email).then(() => {
+                                alert('Email address copied to clipboard: ' + email);
+                            }).catch(() => {
+                                // Fallback if clipboard doesn't work
+                                prompt('Copy this email address:', email);
+                            });
+                        }
+                    }} title="Get my email address">
                         <i className="fas fa-envelope"></i>
                     </a>
                 </div>
