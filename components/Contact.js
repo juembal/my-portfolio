@@ -24,7 +24,7 @@ function Contact() {
     return (
         <>
             <section className="mk-contact" id="contact">
-                <div className="mk-contact-zebra-img" style={{backgroundImage: 'url(/assets/arrow-sample.svg)'}}></div>
+                <div className="mk-contact-zebra-img" style={{backgroundImage: 'url(assets/arrow-sample.svg)'}}></div>
                 <div className="mk-contact-box">
                     <div className="container flex-center flex-column">
                         <div className="mk-contact-box-width">
