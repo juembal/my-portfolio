@@ -10,6 +10,9 @@
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -32,6 +35,18 @@
     <script type="text/babel" src="components/Contact.js"></script>
     <script type="text/babel" src="components/Footer.js"></script>
     <script type="text/babel" src="App.js"></script>
+    
+    <!-- Error handling for debugging -->
+    <script>
+        window.addEventListener('error', function(e) {
+            console.error('Error:', e.error);
+            console.error('Stack:', e.error?.stack);
+        });
+        
+        window.addEventListener('unhandledrejection', function(e) {
+            console.error('Unhandled promise rejection:', e.reason);
+        });
+    </script>
     
     <!-- Floating Skills Script -->
     <script src="js/floating-skills.js"></script>

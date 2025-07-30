@@ -2,14 +2,14 @@ function Projects() {
     const projects = [
         {
             title: "Batangas State University Interactive Navigation Map",
-            description: "Developed a desktop 3D navigation application for Batangas State University – Alangilan. Served as a QA team member, conducting comprehensive testing including functional, usability, and compatibility testing to ensure optimal system performance. Documented test cases, collaborated with developers to resolve defects, and validated navigation accuracy within the 3D environment. Also contributed to the project by modeling several 3D buildings for the campus map, combining technical testing expertise with 3D design skills.",
+            description: "Developed a desktop 3D navigation application for Batangas State University – Alangilan. Served as a QA team member, conducting comprehensive testing including functional, usability, and compatibility testing to ensure optimal system performance. Documented test cases, collaborated with developers to resolve defects, and validated navigation accuracy within the 3D environment. Also contributed to the project by modeling several 3D buildings for the campus map, combining technical testing expertise with creative 3D modeling skills.",
             technologies: ["Quality Assurance", "3D Modeling", "Desktop Application Testing", "Bug Testing", "3D Navigation"],
             image: "assets/navmap.jpg",
             alignment: "right"
         },
         {
             title: "Rakso CT - Billing Tracker Cloud Deployment",
-            description: "Served as an Associate DevOps/Cloud Engineer during an internship at Rakso CT, contributing to the development and deployment of a PERN stack billing tracker application. Supported the deployment process and cloud infrastructure setup using Microsoft Azure services. Configured Ubuntu-based virtual machines, managed deployment pipelines, and handled Linux server configurations. Responsibilities included setting up development and production environments and ensuring the smooth operation of both backend and frontend services on the cloud platform.",
+            description: "Served as an Associate DevOps/Cloud Engineer during an internship at Rakso CT, contributing to the development and deployment of a PERN stack billing tracker application. Supported the deployment process and cloud infrastructure setup using Microsoft Azure services. Configured Ubuntu-based virtual machines, managed deployment pipelines, and handled Linux server configurations. Responsibilities included setting up development and production environments and ensuring the application's scalability and reliability.",
             technologies: ["Microsoft Azure", "Ubuntu Server", "PERN Stack", "DevOps", "Linux Administration"],
             image: "assets/rakso.jpg",
             alignment: "left"
