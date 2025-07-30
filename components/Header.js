@@ -8,8 +8,9 @@ function Header() {
     };
 
     const toggleTheme = () => {
-        setIsDarkMode(!isDarkMode);
-        document.body.classList.toggle('light-mode', !isDarkMode);
+        const newDarkMode = !isDarkMode;
+        setIsDarkMode(newDarkMode);
+        document.body.classList.toggle('light-mode', !newDarkMode);
         
         // Change hero profile image based on theme with smooth transition
         const heroImage = document.getElementById('hero-profile-image');
@@ -18,12 +19,12 @@ function Header() {
             heroImage.style.opacity = '0';
             
             setTimeout(() => {
-                if (!isDarkMode) {
-                    // Switching to light mode - FIXED PATH
-                    heroImage.src = 'assets/profile-light.jpg';
-                } else {
+                if (newDarkMode) {
                     // Switching to dark mode - FIXED PATH
                     heroImage.src = 'assets/profile-dark.jpg';
+                } else {
+                    // Switching to light mode - FIXED PATH
+                    heroImage.src = 'assets/profile-light.jpg';
                 }
                 
                 // Fade in
@@ -107,7 +108,7 @@ function Header() {
                     </div>
                     <div className="mk-theme-toggle">
                         <button className="mk-theme-btn" onClick={toggleTheme} title={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}>
-                            {isDarkMode ? <i className="fas fa-sun"></i> : <i className="fas fa-moon"></i>}
+                            {isDarkMode ? <i className="fas fa-moon"></i> : <i className="fas fa-sun"></i>}
                         </button>
                     </div>
                     <div className="mk-header-menu">
