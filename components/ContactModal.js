@@ -99,11 +99,17 @@ function ContactModal({ isOpen, onClose }) {
     };
 
     const handleCancel = () => {
-        // If email verification is in progress, abort it
+        // If email verification is in progress, abort it and reset states
         if (abortController) {
             abortController.abort();
+            setIsVerifyingEmail(false);
+            setIsSubmitting(false);
+            setSubmitStatus('');
+            setAbortController(null);
+        } else {
+            // If no verification in progress, close the modal normally
+            onClose();
         }
-        onClose();
     };
 
     const getSubmitButtonContent = () => {
@@ -206,9 +212,8 @@ function ContactModal({ isOpen, onClose }) {
                                 type="button"
                                 className="btn-cancel"
                                 onClick={handleCancel}
-                                disabled={isSubmitting && !isVerifyingEmail}
                             >
-                                Cancel
+                                {isVerifyingEmail ? 'Cancel Verification' : 'Cancel'}
                             </button>
                             <button
                                 type="submit"
