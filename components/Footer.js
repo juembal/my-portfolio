@@ -32,9 +32,6 @@ function Footer() {
                         <i className="fas fa-envelope"></i>
                     </a>
                 </div>
-                <p style={{marginTop: '20px', fontSize: '0.9rem', opacity: '0.8'}}>
-                    Built with React.js | Designed for modern web experiences
-                </p>
             </div>
         </footer>
     );
