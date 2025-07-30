@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joem's Portfolio</title>
+    
+    <!-- React Production CDN -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="root"></div>
+    
+    <!-- All Components and App in one script -->
+    <script>
+        const { useState, useEffect } = React;
+
+        // Header Component
+        function Header() {
+            const [isMenuOpen, setIsMenuOpen] = useState(false);
+            const [isDarkMode, setIsDarkMode] = useState(true);
+            const [showCVOptions, setShowCVOptions] = useState(false);
+
+            const toggleMenu = () => {
+                setIsMenuOpen(!isMenuOpen);
+            };
+
+            const toggleTheme = () => {
+                setIsDarkMode(!isDarkMode);
+                document.body.classList.toggle('light-mode', !isDarkMode);
+                
+                const heroImage = document.getElementById('hero-profile-image');
+                if (heroImage) {
+                    heroImage.style.opacity = '0';
+                    
+                    setTimeout(() => {
+                        if (!isDarkMode) {
+                            heroImage.src = 'assets/profile-light.jpg';
+                        } else {
+                            heroImage.src = 'assets/profile-dark.jpg';
+                        }
+                        heroImage.style.opacity = '1';
+                    }, 250);
+                }
+            };
+
+            const scrollToSection = (sectionId) => {
+                const element = document.getElementById(sectionId);
+                if (element) {
+                    const headerHeight = 100;
+                    const elementPosition = element.offsetTop - headerHeight;
+                    window.scrollTo({
+                        top: elementPosition,
+                        behavior: 'smooth'
+                    });
+                    setIsMenuOpen(false);
+                }
+            };
+
+            const handleCVAction = (action) => {
+                const cvPath = 'assets/Jose_Emmanuel_Balingit_CV.pdf';
+                
+                if (action === 'view') {
+                    window.open(cvPath, '_blank');
+                } else if (action === 'download') {
+                    const link = document.createElement('a');
+                    link.href = cvPath;
+                    link.download = 'Jose_Emmanuel_Balingit_CV.pdf';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                }
+                
+                setShowCVOptions(false);
+            };
+
+            useEffect(() => {
+                const handleClickOutside = (event) => {
+                    if (!event.target.closest('.cv-button-container')) {
+                        setShowCVOptions(false);
+                    }
+                };
+
+                document.addEventListener('click', handleClickOutside);
+                return () => document.removeEventListener('click', handleClickOutside);
+            }, []);
+
+            return React.createElement('header', { className: 'mk-header' },
+                React.createElement('div', { className: 'mk-header-container' },
+                    React.createElement('div', null,
+                        React.createElement('div', { className: 'mk-logo-text' },
+                            React.createElement('span', { className: 'mk-logo-initials' }, 'JETB')
+                        )
+                    ),
+                    React.createElement('div', { className: 'd-flex' },
+                        React.createElement('div', null,
+                            React.createElement('div', { className: 'cv-button-container' },
+                                React.createElement('button', {
+                                    className: 'mk-button-md mx-3 mx-lg-5',
+                                    onClick: () => setShowCVOptions(!showCVOptions)
+                                },
+                                    'Curriculum Vitae | CV',
+                                    React.createElement('i', {
+                                        className: `fas fa-chevron-down cv-arrow ${showCVOptions ? 'active' : ''}`
+                                    })
+                                ),
+                                showCVOptions && React.createElement('div', { className: 'cv-dropdown' },
+                                    React.createElement('button', {
+                                        className: 'cv-option',
+                                        onClick: () => handleCVAction('view')
+                                    },
+                                        React.createElement('i', { className: 'fas fa-eye' }),
+                                        'View CV'
+                                    ),
+                                    React.createElement('button', {
+                                        className: 'cv-option',
+                                        onClick: () => handleCVAction('download')
+                                    },
+                                        React.createElement('i', { className: 'fas fa-download' }),
+                                        'Download CV'
+                                    )
+                                )
+                            )
+                        ),
+                        React.createElement('div', { className: 'mk-theme-toggle' },
+                            React.createElement('button', {
+                                className: 'mk-theme-btn',
+                                onClick: toggleTheme,
+                                title: isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'
+                            },
+                                React.createElement('i', {
+                                    className: isDarkMode ? 'fas fa-sun' : 'fas fa-moon'
+                                })
+                            )
+                        ),
+                        React.createElement('div', { className: 'mk-header-menu' },
+                            React.createElement('svg', {
+                                className: `mk-hamburger-icon ${isMenuOpen ? 'active' : ''}`,
+                                width: '30',
+                                height: '30',
+                                viewBox: '0 0 512 512',
+                                onClick: toggleMenu
+                            },
+                                React.createElement('g', null,
+                                    React.createElement('path', {
+                                        d: 'M36.57,73.14h182.86c20.21,0,36.57,16.36,36.57,36.57c0,20.18-16.36,36.57-36.57,36.57H36.57 C16.39,146.29,0,129.89,0,109.71C0,89.5,16.39,73.14,36.57,73.14z M292.57,365.71h182.86c20.21,0,36.57,16.36,36.57,36.57 c0,20.18-16.36,36.57-36.57,36.57H292.57c-20.18,0-36.57-16.39-36.57-36.57C256,382.07,272.39,365.71,292.57,365.71z M36.57,219.43h438.86c20.21,0,36.57,16.36,36.57,36.57c0,20.18-16.36,36.57-36.57,36.57H36.57 C16.39,292.57,0,276.18,0,256C0,235.79,16.39,219'
+                                    })
+                                )
+                            )
+                        )
+                    )
+                ),
+                React.createElement('div', { className: `mk-nav-menu ${isMenuOpen ? 'active' : ''}` },
+                    React.createElement('div', { className: 'mk-nav-menu-content' },
+                        React.createElement('button', {
+                            className: 'mk-nav-item',
+                            onClick: () => scrollToSection('home')
+                        },
+                            React.createElement('i', { className: 'fas fa-home' }),
+                            React.createElement('span', null, 'Home')
+                        ),
+                        React.createElement('button', {
+                            className: 'mk-nav-item',
+                            onClick: () => scrollToSection('about')
+                        },
+                            React.createElement('i', { className: 'fas fa-user' }),
+                            React.createElement('span', null, 'About')
+                        ),
+                        React.createElement('button', {
+                            className: 'mk-nav-item',
+                            onClick: () => scrollToSection('experience')
+                        },
+                            React.createElement('i', { className: 'fas fa-briefcase' }),
+                            React.createElement('span', null, 'Experience')
+                        ),
+                        React.createElement('button', {
+                            className: 'mk-nav-item',
+                            onClick: () => scrollToSection('my-work')
+                        },
+                            React.createElement('i', { className: 'fas fa-code' }),
+                            React.createElement('span', null, 'Projects')
+                        ),
+                        React.createElement('button', {
+                            className: 'mk-nav-item',
+                            onClick: () => scrollToSection('contact')
+                        },
+                            React.createElement('i', { className: 'fas fa-envelope' }),
+                            React.createElement('span', null, 'Contact')
+                        )
+                    )
+                ),
+                isMenuOpen && React.createElement('div', {
+                    className: 'mk-nav-overlay',
+                    onClick: toggleMenu
+                })
+            );
+        }
+
+        // Hero Component
+        function Hero() {
+            const [displayedName, setDisplayedName] = useState('');
+            const [isTyping, setIsTyping] = useState(true);
+            const fullName = 'Jose Emmanuel "Joem" T. Balingit';
+            
+            useEffect(() => {
+                let currentIndex = 0;
+                let isDeleting = false;
+                
+                const getTypingSpeed = () => {
+                    const baseSpeed = isDeleting ? 30 : 80;
+                    const variation = Math.random() * 40;
+                    return baseSpeed + variation;
+                };
+                
+                const typeCharacter = () => {
+                    if (!isDeleting) {
+                        if (currentIndex < fullName.length) {
+                            setDisplayedName(fullName.slice(0, currentIndex + 1));
+                            currentIndex++;
+                            setTimeout(typeCharacter, getTypingSpeed());
+                        } else {
+                            setIsTyping(false);
+                            setTimeout(() => {
+                                isDeleting = true;
+                                setIsTyping(true);
+                                typeCharacter();
+                            }, 3000);
+                        }
+                    } else {
+                        if (currentIndex > 0) {
+                            currentIndex--;
+                            setDisplayedName(fullName.slice(0, currentIndex));
+                            setTimeout(typeCharacter, getTypingSpeed());
+                        } else {
+                            isDeleting = false;
+                            setIsTyping(true);
+                            setTimeout(typeCharacter, 800);
+                        }
+                    }
+                };
+                
+                setTimeout(typeCharacter, 500);
+            }, []);
+
+            return React.createElement('section', { className: 'mk-hero', id: 'home' },
+                React.createElement('div', { className: 'container' },
+                    React.createElement('div', { className: 'mk-hero-container' },
+                        React.createElement('div', { className: 'row' },
+                            React.createElement('div', { className: 'col-12 col-md-8' },
+                                React.createElement('div', { className: 'mk-hero-content' },
+                                    React.createElement('div', { className: 'mk-hero-greeting', 'data-aos': 'fade-down-right' }, 'Hello, I\'m'),
+                                    React.createElement('div', { className: 'mk-hero-name', 'data-aos': 'zoom-in-right' },
+                                        React.createElement('span', { className: 'name-container' },
+                                            displayedName,
+                                            React.createElement('span', { className: `typing-cursor ${isTyping ? 'typing' : ''}` }, '|')
+                                        )
+                                    ),
+                                    React.createElement('div', { className: 'mk-hero-title', 'data-aos': 'zoom-in-right' },
+                                        'BS Computer Science Graduate | Aspiring Software Developer & DevOps Engineer | Entry-Level QA Enthusiast'
+                                    ),
+                                    React.createElement('div', { className: 'mk-hero-description', 'data-aos': 'zoom-in-left' },
+                                        'I\'m a Computer Science graduate passionate about building and optimizing software systems. I specialize in software development, DevOps engineering, and quality assurance. From developing full-stack web applications to implementing automated testing and managing cloud deployment pipelines, I enjoy creating reliable and scalable solutions that make a real impact. Whether coding, testing, or deploying, I focus on writing clean code, solving real-world problems, and continuously learning new technologies.'
+                                    ),
+                                    React.createElement('div', { className: 'mk-hero-buttons', 'data-aos': 'zoom-in-left' },
+                                        React.createElement('button', {
+                                            className: 'mk-button-primary',
+                                            onClick: () => document.getElementById('contact').scrollIntoView({behavior: 'smooth'})
+                                        }, 'Get In Touch'),
+                                        React.createElement('button', {
+                                            className: 'mk-button-secondary',
+                                            onClick: () => document.getElementById('my-work').scrollIntoView({behavior: 'smooth'})
+                                        }, 'View My Work')
+                                    ),
+                                    React.createElement('div', { className: 'mk-hero-social', 'data-aos': 'zoom-in-left' },
+                                        React.createElement('a', {
+                                            href: 'https://github.com/juembal',
+                                            target: '_blank',
+                                            rel: 'noopener noreferrer'
+                                        },
+                                            React.createElement('i', { className: 'fab fa-github' })
+                                        ),
+                                        React.createElement('a', {
+                                            href: 'http://linkedin.com/in/joembalingit',
+                                            target: '_blank',
+                                            rel: 'noopener noreferrer'
+                                        },
+                                            React.createElement('i', { className: 'fab fa-linkedin' })
+                                        ),
+                                        React.createElement('a', {
+                                            href: '#',
+                                            onClick: (e) => {
+                                                e.preventDefault();
+                                                const email = 'joembalingit15@gmail.com';
+                                                if (navigator.userAgent.includes('Mobile')) {
+                                                    window.location.href = `mailto:${email}`;
+                                                } else {
+                                                    navigator.clipboard.writeText(email).then(() => {
+                                                        alert('Email address copied to clipboard: ' + email);
+                                                    }).catch(() => {
+                                                        prompt('Copy this email address:', email);
+                                                    });
+                                                }
+                                            },
+                                            title: 'Get my email address'
+                                        },
+                                            React.createElement('i', { className: 'fas fa-envelope' })
+                                        )
+                                    )
+                                )
+                            ),
+                            React.createElement('div', { className: 'col-12 col-md-4' },
+                                React.createElement('div', { className: 'mk-hero-profile-wrapper', 'data-aos': 'zoom-in-right' },
+                                    React.createElement('div', { className: 'mk-hover-image mk-hero-profile-parent' },
+                                        React.createElement('div', { className: 'mk-hover-image-border' }),
+                                        React.createElement('div', { className: 'mk-hover-image-filter' }),
+                                        React.createElement('img', {
+                                            alt: 'Jose Emmanuel T. Balingit',
+                                            className: 'mk-hover-profile mk-hero-profile',
+                                            src: 'assets/profile-dark.jpg',
+                                            id: 'hero-profile-image'
+                                        })
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            );
+        }
+
+        // Simple placeholder components for now
+        function About() {
+            return React.createElement('section', { id: 'about' }, 
+                React.createElement('h2', null, 'About Section - Loading...')
+            );
+        }
+
+        function Experience() {
+            return React.createElement('section', { id: 'experience' }, 
+                React.createElement('h2', null, 'Experience Section - Loading...')
+            );
+        }
+
+        function Projects() {
+            return React.createElement('section', { id: 'my-work' }, 
+                React.createElement('h2', null, 'Projects Section - Loading...')
+            );
+        }
+
+        function Contact() {
+            return React.createElement('section', { id: 'contact' }, 
+                React.createElement('h2', null, 'Contact Section - Loading...')
+            );
+        }
+
+        function Footer() {
+            return React.createElement('footer', null, 
+                React.createElement('p', null, 'Footer - Loading...')
+            );
+        }
+
+        // Main App Component
+        function App() {
+            const [isLoaded, setIsLoaded] = useState(false);
+
+            useEffect(() => {
+                setIsLoaded(true);
+            }, []);
+
+            return React.createElement('div', { className: `app ${isLoaded ? 'loaded' : ''}` },
+                React.createElement('div', { className: 'mk-cursor-line-box' },
+                    React.createElement('div', { className: 'mk-cursor-line-right-1' }),
+                    React.createElement('div', { className: 'mk-cursor-line-bottom-1' })
+                ),
+                React.createElement('div', { className: 'mk-top-scrolled' },
+                    React.createElement('div', {
+                        className: 'mk-top-scrolled-highlight',
+                        style: { transform: 'translateX(-100%)' }
+                    })
+                ),
+                React.createElement(Header),
+                React.createElement(Hero),
+                React.createElement(About),
+                React.createElement(Experience),
+                React.createElement(Projects),
+                React.createElement(Contact),
+                React.createElement(Footer)
+            );
+        }
+
+        // Render the app
+        ReactDOM.render(React.createElement(App), document.getElementById('root'));
+    </script>
+    
+    <!-- Floating Skills Script -->
+    <script src="js/floating-skills.js"></script>
+</body>
+</html>
