@@ -6,7 +6,9 @@ function ContactModal({ isOpen, onClose }) {
         message: ''
     });
     const [isSubmitting, setIsSubmitting] = React.useState(false);
+    const [isVerifyingEmail, setIsVerifyingEmail] = React.useState(false);
     const [submitStatus, setSubmitStatus] = React.useState('');
+    const [abortController, setAbortController] = React.useState(null);
 
     const handleChange = (e) => {
         setFormData({
@@ -15,13 +17,44 @@ function ContactModal({ isOpen, onClose }) {
         });
     };
 
+    // 🔍 Verify email existence via Mailboxlayer
+    const verifyEmail = async (email, signal) => {
+        const apiKey = '049fd7236915c031056d9c43135ad70b';
+        const response = await fetch(`https://apilayer.net/api/check?access_key=${apiKey}&email=${email}&smtp=1&format=1`, {
+            signal
+        });
+        const data = await response.json();
+        return data;
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsSubmitting(true);
         setSubmitStatus('');
 
+        // Create abort controller for email verification
+        const controller = new AbortController();
+        setAbortController(controller);
+
         try {
-            // Send email directly using Web3Forms
+            // Step 1: Show email verification status
+            setIsVerifyingEmail(true);
+            setSubmitStatus('verifying');
+            
+            const emailCheck = await verifyEmail(formData.email, controller.signal);
+            
+            setIsVerifyingEmail(false);
+            setAbortController(null);
+
+            if (!emailCheck.smtp_check) {
+                setSubmitStatus('email-error');
+                setIsSubmitting(false);
+                return;
+            }
+
+            // Step 2: Show sending status and proceed with sending the form
+            setSubmitStatus('sending');
+            
             const formData2 = new FormData();
             formData2.append('access_key', '80d81eb1-5ccc-41db-a714-d8111f87707e');
             formData2.append('name', formData.name);
@@ -37,12 +70,11 @@ function ContactModal({ isOpen, onClose }) {
             });
 
             const result = await response.json();
-            
+
             if (result.success) {
                 setSubmitStatus('success');
                 setFormData({ name: '', email: '', subject: '', message: '' });
-                
-                // Close modal after 3 seconds
+
                 setTimeout(() => {
                     onClose();
                     setSubmitStatus('');
@@ -52,11 +84,53 @@ function ContactModal({ isOpen, onClose }) {
             }
 
         } catch (error) {
-            console.error('Error sending email:', error);
-            setSubmitStatus('error');
+            if (error.name === 'AbortError') {
+                console.log('Email verification was cancelled');
+                setSubmitStatus('');
+            } else {
+                console.error('Error sending email:', error);
+                setSubmitStatus('error');
+            }
         } finally {
             setIsSubmitting(false);
+            setIsVerifyingEmail(false);
+            setAbortController(null);
         }
+    };
+
+    const handleCancel = () => {
+        // If email verification is in progress, abort it
+        if (abortController) {
+            abortController.abort();
+        }
+        onClose();
+    };
+
+    const getSubmitButtonContent = () => {
+        if (isVerifyingEmail) {
+            return (
+                <>
+                    <i className="fas fa-spinner fa-spin"></i>
+                    Verifying Email...
+                </>
+            );
+        }
+        
+        if (isSubmitting && submitStatus === 'sending') {
+            return (
+                <>
+                    <i className="fas fa-spinner fa-spin"></i>
+                    Sending Message...
+                </>
+            );
+        }
+        
+        return (
+            <>
+                <i className="fas fa-paper-plane"></i>
+                Send Message
+            </>
+        );
     };
 
     if (!isOpen) return null;
@@ -70,10 +144,10 @@ function ContactModal({ isOpen, onClose }) {
                         <i className="fas fa-times"></i>
                     </button>
                 </div>
-                
+
                 <div className="contact-modal-content">
                     <p>I'd love to hear from you! Send me a message and I'll get back to you as soon as possible.</p>
-                    
+
                     <form onSubmit={handleSubmit} className="contact-form">
                         <div className="form-group">
                             <label htmlFor="name">Your Name</label>
@@ -87,7 +161,7 @@ function ContactModal({ isOpen, onClose }) {
                                 placeholder="Enter your full name"
                             />
                         </div>
-                        
+
                         <div className="form-group">
                             <label htmlFor="email">Your Email</label>
                             <input
@@ -100,7 +174,7 @@ function ContactModal({ isOpen, onClose }) {
                                 placeholder="Enter your email address"
                             />
                         </div>
-                        
+
                         <div className="form-group">
                             <label htmlFor="subject">Subject</label>
                             <input
@@ -113,7 +187,7 @@ function ContactModal({ isOpen, onClose }) {
                                 placeholder="What's this about?"
                             />
                         </div>
-                        
+
                         <div className="form-group">
                             <label htmlFor="message">Message</label>
                             <textarea
@@ -126,42 +200,42 @@ function ContactModal({ isOpen, onClose }) {
                                 placeholder="Tell me about your project or just say hello!"
                             ></textarea>
                         </div>
-                        
+
                         <div className="form-actions">
-                            <button 
-                                type="button" 
-                                className="btn-cancel" 
-                                onClick={onClose}
-                                disabled={isSubmitting}
+                            <button
+                                type="button"
+                                className="btn-cancel"
+                                onClick={handleCancel}
+                                disabled={isSubmitting && !isVerifyingEmail}
                             >
                                 Cancel
                             </button>
-                            <button 
-                                type="submit" 
-                                className="btn-submit" 
-                                disabled={isSubmitting}
+                            <button
+                                type="submit"
+                                className="btn-submit"
+                                disabled={isSubmitting || isVerifyingEmail}
                             >
-                                {isSubmitting ? (
-                                    <>
-                                        <i className="fas fa-spinner fa-spin"></i>
-                                        Sending...
-                                    </>
-                                ) : (
-                                    <>
-                                        <i className="fas fa-paper-plane"></i>
-                                        Send Message
-                                    </>
-                                )}
+                                {getSubmitButtonContent()}
                             </button>
                         </div>
-                        
+
+                        {/* Email verification failed */}
+                        {submitStatus === 'email-error' && (
+                            <div className="status-message error">
+                                <i className="fas fa-exclamation-circle"></i>
+                                The email address does not appear to exist. Please check and try again.
+                            </div>
+                        )}
+
+                        {/* Success status */}
                         {submitStatus === 'success' && (
                             <div className="status-message success">
                                 <i className="fas fa-check-circle"></i>
                                 Message sent successfully! I'll get back to you soon.
                             </div>
                         )}
-                        
+
+                        {/* General error status */}
                         {submitStatus === 'error' && (
                             <div className="status-message error">
                                 <i className="fas fa-exclamation-circle"></i>
